@@ -1,0 +1,9 @@
+iter_crite = 2
+batch_size = 20
+address="../../dataset/SUNReady/"
+learning_rate = 0.0001
+rand_dim = 204
+max_iter = 50000
+
+
+rand_feat = np.random.uniform(-0.1, 0.1, [batch_size, rand_dim]).astype(np.float32)
