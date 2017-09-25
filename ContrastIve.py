@@ -110,7 +110,7 @@ def main(argv=None):
                 res_out = sess.run(gen_out, feed_dict={feat_input: feature, attr_input: att})
                 res_array.append(res_out)
                 lab_array.append(lab)
-                pos = np.argmax(res_out, axis=0)
+                pos = np.argmin(res_out, axis=0)
                 sorted = np.sort(res_out,axis=0)[::-1]
                 ratio = sorted[0]/sorted[1]
                 if lab == reader.testClass[pos]:
