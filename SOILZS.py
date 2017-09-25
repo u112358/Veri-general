@@ -15,7 +15,7 @@ address = "./"
 learning_rate = 0.00001
 
 max_iter = 10000000
-threshold = 1.06
+threshold = 1.08
 
 def main(argv=None):
     reader = data_reader.BatchDatset(address, batch_size)
