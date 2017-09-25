@@ -116,24 +116,53 @@ def main(argv=None):
                 if lab == reader.testClass[pos]:
                     count += 1
 
-                if ratio>threshold:
-                    sim_label = np.zeros([num_att,1])
-                    sim_label[pos]=1
-                    sess.run([opt, loss], feed_dict={feat_input: feature,
-                                                     attr_input: att,
-                                                     sim_input: sim_label})
+                # if ratio>threshold:
+                #     sim_label = np.zeros([num_att,1])
+                #     sim_label[pos]=1
+                #     sess.run([opt, loss], feed_dict={feat_input: feature,
+                #                                      attr_input: att,
+                #                                      sim_input: sim_label})
             acc_ts = count / num_test
             # filename = 'result_ts%d.mat' %T
             # sio.savemat(filename,{'res':res_array,'lab':lab_array})
-            acc[times, 1] = acc_ts
             print("acc_ts=" + str(acc_ts))
             # acc_H = 2 * acc_tr * acc_ts / (acc_tr + acc_ts)
             # acc[times, 2] = acc_H
             # print("acc_H=" + str(acc_H))
-            times += 1
             # summary.value.add(tag='acc_tr',simple_value=acc_tr)
             summary.value.add(tag='acc_ts',simple_value=acc_ts)
             # summary.value.add(tag='acc_H',simple_value=acc_H)
+            if T>150000:
+                count = 0
+                for i in xrange(num_test):
+                    feature, lab = reader.next_feat_test(i)
+                    feature = np.tile(feature, [num_att, 1])
+                    # att = reader.class_attributes
+                    res_out = sess.run(gen_out, feed_dict={feat_input: feature, attr_input: att})
+                    res_array.append(res_out)
+                    lab_array.append(lab)
+                    pos = np.argmax(res_out, axis=0)
+                    sorted = np.sort(res_out,axis=0)[::-1]
+                    ratio = sorted[0]/sorted[1]
+                    if lab == reader.testClass[pos]:
+                        count += 1
+
+                    # if ratio>threshold:
+                        sim_label = np.zeros([num_att,1])
+                        sim_label[pos]=1
+                        sess.run([opt, loss], feed_dict={feat_input: feature,
+                                                         attr_input: att,
+                                                         sim_input: sim_label})
+                    acc_ts = count / num_test
+                    # filename = 'result_ts%d.mat' %T
+                    # sio.savemat(filename,{'res':res_array,'lab':lab_array})
+                    print("acc_tsi=" + str(acc_ts))
+                    # acc_H = 2 * acc_tr * acc_ts / (acc_tr + acc_ts)
+                    # acc[times, 2] = acc_H
+                    # print("acc_H=" + str(acc_H))
+                    # summary.value.add(tag='acc_tr',simple_value=acc_tr)
+                    summary.value.add(tag='acc_tsi',simple_value=acc_ts)
+
         summary_writer.add_summary(summary,global_step=T)
         summary_writer.flush()
         # if (T + 1) % 3000 == 0:
