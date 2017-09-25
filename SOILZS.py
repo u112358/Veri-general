@@ -136,9 +136,9 @@ def main(argv=None):
                 count = 0
                 for i in xrange(num_test):
                     feature, lab = reader.next_feat_test(i)
-                    feature = np.tile(feature, [num_att, 1])
+                    feature_to_test = np.tile(feature, [num_att, 1])
                     # att = reader.class_attributes
-                    res_out = sess.run(gen_out, feed_dict={feat_input: feature, attr_input: att})
+                    res_out = sess.run(gen_out, feed_dict={feat_input: feature_to_test, attr_input: att})
                     res_array.append(res_out)
                     lab_array.append(lab)
                     pos = np.argmax(res_out, axis=0)
@@ -148,10 +148,12 @@ def main(argv=None):
                         count += 1
 
                     if ratio>threshold:
-                        sim_label = np.zeros([num_att,1])
-                        sim_label[pos]=1
-                        sess.run([opt, loss], feed_dict={feat_input: feature,
-                                                         attr_input: att,
+                        att_all = reader.class_attributes
+                        sim_label = np.zeros([np.shape(att_all)[0],1])
+                        sim_label[reader.testClass[pos]-1]=1
+                        feature_all = np.tile(feature,[np.shape(att_all),1])
+                        sess.run([opt, loss], feed_dict={feat_input: feature_all,
+                                                         attr_input: att_all,
                                                          sim_input: sim_label})
                 acc_ts = count / num_test
                 # filename = 'result_ts%d.mat' %T
