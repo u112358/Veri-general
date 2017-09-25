@@ -16,7 +16,7 @@ learning_rate = 0.0001
 
 max_iter = 10000000
 threshold = 1.06
-margin = 1.0
+margin = 0.5
 
 def main(argv=None):
     reader = data_reader.BatchDatset(address, batch_size)
@@ -48,7 +48,7 @@ def main(argv=None):
     sess.run(init_op)
 
     subdir = datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S')
-    summary_writer = tf.summary.FileWriter(os.path.join('./log/contrastive/inner_product',subdir),sess.graph)
+    summary_writer = tf.summary.FileWriter(os.path.join('./log/contrastive/inner_product0.5',subdir),sess.graph)
     # ckpt = tf.train.get_checkpoint_state('models')
     # if ckpt and ckpt.model_checkpoint_path:
     #     saver.restore(sess, ckpt.model_checkpoint_path)
