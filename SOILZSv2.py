@@ -114,8 +114,8 @@ def main(argv=None):
                 if lab == reader.testClass[pos]:
                     count += 1
             acc_ts = count / num_test
-            filename = 'result_ts%d.mat' %T
-            sio.savemat(filename,{'res':res_array,'lab':lab_array})
+            # filename = 'result_ts%d.mat' %T
+            # sio.savemat(filename,{'res':res_array,'lab':lab_array})
             acc[times, 1] = acc_ts
             print("acc_ts=" + str(acc_ts))
             # acc_H = 2 * acc_tr * acc_ts / (acc_tr + acc_ts)
