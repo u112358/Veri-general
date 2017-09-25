@@ -12,7 +12,7 @@ from datetime import datetime
 batch_size = 20
 address = "./"
 
-learning_rate = 0.00001
+learning_rate = 0.0001
 
 max_iter = 10000000
 threshold = 1.06
