@@ -47,7 +47,7 @@ def main(argv=None):
     sess.run(init_op)
 
     subdir = datetime.strftime(datetime.now(), '%Y%m%d-%H%M%S')
-    summary_writer = tf.summary.FileWriter(os.path.join('./log/inner_product',subdir),sess.graph)
+    summary_writer = tf.summary.FileWriter(os.path.join('./log/inner_product/ratio1.08',subdir),sess.graph)
     # ckpt = tf.train.get_checkpoint_state('models')
     # if ckpt and ckpt.model_checkpoint_path:
     #     saver.restore(sess, ckpt.model_checkpoint_path)
