@@ -16,6 +16,7 @@ learning_rate = 0.0001
 
 max_iter = 10000000
 threshold = 1.06
+margin = 1.0
 
 def main(argv=None):
     reader = data_reader.BatchDatset(address, batch_size)
@@ -36,7 +37,7 @@ def main(argv=None):
 
     fc2, fc3, gen_out = gan.Naive_Net(feat_input, attr_input)
     d_sqrt = tf.sqrt(gen_out)
-    loss = tf.reduce_mean((1.0-sim_input) * tf.square(tf.maximum(0., 1.0 - d_sqrt)) + sim_input * gen_out)
+    loss = tf.reduce_mean((1.0-sim_input) * tf.square(tf.maximum(0., margin - d_sqrt)) + sim_input * gen_out)
 
     training_list = tf.trainable_variables()
     opt = tf.train.AdamOptimizer(learning_rate).minimize(loss, var_list=training_list)

@@ -149,9 +149,10 @@ def main(argv=None):
 
                     if ratio>threshold:
                         att_all = reader.class_attributes
-                        sim_label = np.zeros([np.shape(att_all)[0],1])
+                        num_att_all = np.shape(att_all)[0]
+                        sim_label = np.zeros([num_att_all,1])
                         sim_label[reader.testClass[pos]-1]=1
-                        feature_all = np.tile(feature,[np.shape(att_all),1])
+                        feature_all = np.tile(feature,[num_att_all,1])
                         sess.run([opt, loss], feed_dict={feat_input: feature_all,
                                                          attr_input: att_all,
                                                          sim_input: sim_label})
