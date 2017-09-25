@@ -153,15 +153,15 @@ def main(argv=None):
                         sess.run([opt, loss], feed_dict={feat_input: feature,
                                                          attr_input: att,
                                                          sim_input: sim_label})
-                    acc_ts = count / num_test
-                    # filename = 'result_ts%d.mat' %T
-                    # sio.savemat(filename,{'res':res_array,'lab':lab_array})
-                    print("acc_tsi=" + str(acc_ts))
-                    # acc_H = 2 * acc_tr * acc_ts / (acc_tr + acc_ts)
-                    # acc[times, 2] = acc_H
-                    # print("acc_H=" + str(acc_H))
-                    # summary.value.add(tag='acc_tr',simple_value=acc_tr)
-                    summary.value.add(tag='acc_tsi',simple_value=acc_ts)
+                acc_ts = count / num_test
+                # filename = 'result_ts%d.mat' %T
+                # sio.savemat(filename,{'res':res_array,'lab':lab_array})
+                print("acc_tsi=" + str(acc_ts))
+                # acc_H = 2 * acc_tr * acc_ts / (acc_tr + acc_ts)
+                # acc[times, 2] = acc_H
+                # print("acc_H=" + str(acc_H))
+                # summary.value.add(tag='acc_tr',simple_value=acc_tr)
+                summary.value.add(tag='acc_tsi',simple_value=acc_ts)
 
         summary_writer.add_summary(summary,global_step=T)
         summary_writer.flush()
