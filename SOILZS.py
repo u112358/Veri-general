@@ -147,7 +147,7 @@ def main(argv=None):
                     if lab == reader.testClass[pos]:
                         count += 1
 
-                    # if ratio>threshold:
+                    if ratio>threshold:
                         sim_label = np.zeros([num_att,1])
                         sim_label[pos]=1
                         sess.run([opt, loss], feed_dict={feat_input: feature,
