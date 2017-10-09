@@ -14,7 +14,7 @@ import sys
 batch_size = 20
 address = "./"
 
-max_iter = 2000000
+max_iter = 1000000
 threshold = 1.06
 
 
